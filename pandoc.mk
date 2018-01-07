@@ -14,7 +14,13 @@ endif
 find_files = $(shell find $(1) -type f)
 
 ## List of markdown files and resulting html files
-md := $(filter %.md,$(call find_files,$(src)))
+# get explicit md files out of $(src)
+md := $(filter %.md,$(src))
+# scan recursively directories from $(src)
+md-dirs := $(filter-out $(md),$(src))
+ifneq ($(md-dirs),)
+md += $(filter %.md,$(call find_files,$(md-dirs)kla))
+endif
 html := $(md:%.md=%.html)
 pdf := $(md:%.md=%.pdf)
 

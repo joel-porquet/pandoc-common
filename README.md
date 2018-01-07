@@ -18,19 +18,25 @@ $ tree
 .
 ├── common      <= the submodule
 ├── directory
-│   └── file.md
+│   └── file2.md
+├── file1.md
 └── Makefile
 ```
 
 ## Root makefile
 
-In the "root" Makefile, you need to specify which folders contain the
-markdown-formatted documents and which dependencies are global to all documents.
+In the "root" Makefile, you can either specify entire folders or
+markdown-formatted files.  Folders will be recursively scanned in order to find
+markdown-formatted files.
+
+You can also specify which dependencies are global to all files.
+
 Eg:
 
 ```mk
 ## Source directories
 src := directory
+src += file1.md
 
 ## Extra dependencies (optional)
 dep :=
