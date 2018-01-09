@@ -19,7 +19,7 @@ md := $(filter %.md,$(src))
 # scan recursively directories from $(src)
 md-dirs := $(filter-out $(md),$(src))
 ifneq ($(md-dirs),)
-md += $(filter %.md,$(call find_files,$(md-dirs)kla))
+md += $(filter %.md,$(call find_files,$(md-dirs)))
 endif
 html := $(md:%.md=%.html)
 pdf := $(md:%.md=%.pdf)
