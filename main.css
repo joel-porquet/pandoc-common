@@ -20,9 +20,12 @@ body {
     position: relative;
 }
 
+/**
+ * Special classes
+ */
+
 /*
- * Put stuff in a floating box. To be used with:
- *
+ * Put text in floating box:
  * ::: keyword
  * Blabla
  * :::
@@ -31,6 +34,14 @@ body {
     position: absolute;
     right: -15em;
     width: 10em;
+}
+
+/*
+ * ![](img.jpg){width=50% .center}
+ */
+.center {
+    display: block;
+    margin: auto;
 }
 
 /**
