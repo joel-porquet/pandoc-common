@@ -51,6 +51,7 @@ quiet_cmd_pandoc = PANDOC $@
 				   -s --self-contained \
 				   --toc --toc-depth=1 -N \
 				   --webtex \
+				   --resource-path=.:$(current_dir) \
 				   --filter $(addprefix $(current_dir),pygmentize.py) \
 				   --css $(addprefix $(current_dir),main.css) \
 				   --css $(addprefix $(current_dir),code.css) \
