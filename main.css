@@ -45,6 +45,13 @@ body {
     text-align: center;
 }
 
+/*
+ * Special class rules
+ */
+.author {
+    font-size: 1.2em;
+}
+
 /**
  * Links
  */
@@ -280,11 +287,6 @@ table td {
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
     vertical-align: top;
-}
-
-.author {
-    font-size: 1.2em;
-    /*text-align: center;*/
 }
 
 /**
