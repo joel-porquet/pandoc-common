@@ -323,6 +323,11 @@ ul ul, ol ol {
     margin: .3em 0;
 }
 
+ul li ul, ul li ol, ol li ul, ol li ol {
+    margin-left: 1.25em;
+    margin-bottom: 0;
+}
+
 dl {
     margin-bottom: 1em;
 }
