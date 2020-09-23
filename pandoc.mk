@@ -10,8 +10,8 @@ ifeq (,$(shell command -v $(PANDOC) 2>/dev/null))
 $(error Could not find executable '$(PANDOC)' in PATH)
 endif
 
-## Find all files under a directory
-find_files = $(shell find $(1) -type f)
+## Find all files under a directory (ignore files prefixed with `_`)
+find_files = $(shell find $(1) -type f -not -name "_*")
 
 ## List of markdown files and resulting html files
 # get explicit md files out of $(src)
@@ -24,10 +24,19 @@ endif
 html := $(md:%.md=%.html)
 pdf := $(md:%.md=%.pdf)
 
+## Filters
+filters := $(call find_files, $(addprefix $(current_dir),filters))
+## Stylesheets
+styles := $(call find_files, $(addprefix $(current_dir),stylesheets))
+## Template
+tmpl := $(addprefix $(current_dir),template.html)
+
 ## Extra dependencies for all targets
-dep += $(addprefix $(current_dir),pygmentize.py)
-dep += $(addprefix $(current_dir),code.css)
-dep += $(addprefix $(current_dir),main.css)
+dep += $(filters)
+dep += $(styles)
+dep += $(tmpl)
+dep += $(call find_files, $(addprefix $(current_dir),images))
+dep += $(addprefix $(current_dir),pandoc.mk)
 
 ## Command management and quiet mode
 ifneq ($(V),1)
@@ -49,12 +58,12 @@ all: $(html)
 quiet_cmd_pandoc = PANDOC $@
       cmd_pandoc = $(PANDOC) \
 				   -s --self-contained \
-				   --toc --toc-depth=1 -N \
+				   --toc --toc-depth=2 \
 				   --webtex \
 				   --resource-path=.:$(current_dir) \
-				   --filter $(addprefix $(current_dir),pygmentize.py) \
-				   --css $(addprefix $(current_dir),main.css) \
-				   --css $(addprefix $(current_dir),code.css) \
+				   --template=$(tmpl) \
+				   $(foreach f,$(filters),--filter $(f)) \
+				   $(foreach s,$(styles),--css $(s)) \
 				   $< -o $@
 %.html: %.md $(dep)
 	$(call cmd,pandoc)
